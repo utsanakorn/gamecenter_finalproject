@@ -1,0 +1,62 @@
+.quick-play-card {
+  margin: 16px 0;
+  background: linear-gradient(135deg, rgba(26, 40, 64, 0.8) 0%, rgba(26, 40, 64, 0.4) 100%);
+  border: 1px solid rgba(42, 56, 80, 0.5);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quick-play-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 217, 255, 0.2);
+}
+
+.quick-play-content {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+}
+
+.quick-play-icon-container {
+  flex-shrink: 0;
+}
+
+.quick-play-icon-bg {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #FF6B9D, #C06C84);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-play-icon {
+  font-size: 28px;
+}
+
+.quick-play-text {
+  flex: 1;
+}
+
+.quick-play-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.quick-play-description {
+  font-size: 14px;
+  color: #A0AEC0;
+}
+
+.quick-play-button {
+  --background: linear-gradient(90deg, #00D9FF, #0083B0);
+  --color: #0A1628;
+  font-weight: bold;
+  letter-spacing: 1px;
+  min-width: 80px;
+}

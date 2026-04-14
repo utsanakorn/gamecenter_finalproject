@@ -1,0 +1,57 @@
+.home-page {
+  --background: #0A1628;
+}
+
+.custom-toolbar {
+  --background: transparent;
+  --border-width: 0;
+}
+
+.home-header {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.home-subtitle {
+  color: #A0AEC0;
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.home-content {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.stats-section {
+  margin-bottom: 32px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.quick-play-section {
+  margin-top: 32px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #A0AEC0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
