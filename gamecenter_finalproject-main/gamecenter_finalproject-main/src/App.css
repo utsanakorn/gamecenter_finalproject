@@ -1,0 +1,38 @@
+/* Custom Tab Bar Styling */
+.custom-tab-bar {
+  --background: #0A1628;
+  --border: 1px solid rgba(42, 56, 80, 0.5);
+  border-top: 1px solid rgba(42, 56, 80, 0.5);
+}
+
+ion-tab-button {
+  --color: #718096;
+  --color-selected: #00D9FF;
+}
+
+ion-tab-button.tab-selected {
+  --color: #00D9FF;
+}
+
+ion-tab-button ion-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+ion-tab-button ion-label {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Global Loading */
+.loading-pulse {
+  animation: pulse 2s ease-in-out infinite;
+  font-family: 'Orbitron', sans-serif;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
