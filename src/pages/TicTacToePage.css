@@ -14,11 +14,9 @@
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
   width: 100%;
   max-width: 350px;
   aspect-ratio: 1;    /* keeps it square */
-
   gap: 10px;
   margin: 20px auto;
 }
@@ -27,14 +25,11 @@
 .cell {
   width: 100%;
   aspect-ratio: 1;
-
   background: #0A1628;
   border: 2px solid rgba(0, 217, 255, 0.4);
-
   font-size: 2rem;
   font-weight: bold;
   color: #00D9FF;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,22 +70,30 @@
 }
 
 .result-card {
+  animation: modal-pop 0.3s ease;
   background: #0A1628;
   color: #FFFFFF;
-
   width: 85%;
   max-width: 360px;
-
   padding: 24px;
   border-radius: 20px;
-
   text-align: center;
-
-  margin: auto;   /* ← THIS centers it correctly */
-
+  margin: auto; 
   box-shadow: 
     0 0 20px rgba(0, 217, 255, 0.4),
     0 0 40px rgba(0, 217, 255, 0.2);
+}
+
+/* anims */
+@keyframes modal-pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .result-card h2 {
@@ -113,5 +116,80 @@
 
 ion-modal{
   --background: transparent;
+}
+
+.cell {
+  animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cell:active {
+  transform: scale(0.9);
+}
+
+.cell:hover {
+  transform: scale(1.05);
+}
+
+.filled {
+  animation: pop 0.2s ease;
+}
+
+
+/* highlight winning cells */
+.winner-cell {
+  background: rgba(0, 217, 255, 0.2);
+  border: 2px solid #00D9FF;
+
+  box-shadow: 
+    0 0 10px rgba(0, 217, 255, 0.6),
+    0 0 20px rgba(0, 217, 255, 0.4);
+
+  animation: winGlow 0.4s ease;
+}
+
+@keyframes winGlow {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+.mode-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;  
+  text-align: center;
+  gap: 20px;
+}
+
+.mode-title {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #00D9FF;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
+}
+
+.mode-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;        
+  width: 100%;
 }
 

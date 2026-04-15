@@ -21,6 +21,9 @@ const TicTacToePage: React.FC = () => {
   // Card pop up when game ends
   const [showResult, setShowResult] = useState(false);
 
+  // State for game mode
+  const [gameMode, setGameMode] = useState<'1P' | '2P' | null>(null);
+
   /**
    * handleClick
    * Handles user clicking a cell on the board
@@ -29,9 +32,13 @@ const TicTacToePage: React.FC = () => {
    */
   const handleClick = (index: number) => {
 
-    // Prevents clicking if cell in the board is already filled OR game already won
-    if (board[index] || calculateWinner(board) || gameEnded) return;
-
+    // Prevents clicking if cell in the board is already filled OR game already won OR IF NOT USER TURN
+  if (
+    board[index] ||
+    result ||
+    gameEnded ||
+    (gameMode === '1P' && !isXTurn)
+  ) return;
     // Create a copy of the board
     const newBoard = [...board];
 
@@ -45,8 +52,30 @@ const TicTacToePage: React.FC = () => {
     setIsXTurn(!isXTurn);
   };
 
+
+  /* COMPUTER MOVE LOGIC */
+  const makeComputerMove = () => {
+    // find empty cells
+    const emptyIndexes = board
+      .map((cell, idx) => (cell === null ? idx : null))
+      .filter(idx => idx !== null) as number[];
+
+    if (emptyIndexes.length === 0) return; // no moves left
+
+    // Randomly select an empty cell
+    const randomIndex = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+
+    // Place 'O' in the selected cell
+    const newBoard = [...board];
+    newBoard[randomIndex] = 'O';
+    setBoard(newBoard); // update board state
+    setIsXTurn(true); // switch back to player's turn
+  };
+
   // Determine winner if someone wins
-  const winner = calculateWinner(board);
+  const result = calculateWinner(board);
+  const winner = result?.winner;
+  const winningLine = result?.line;
 
   // Checks for draw (no winner and board is full)
   const isDraw = !winner && board.every(cell => cell !== null);
@@ -81,11 +110,24 @@ const TicTacToePage: React.FC = () => {
       }
 
       updateHighScore(1);
-
       setGameEnded(true);
       setShowResult(true); // show result card
     }
   }, [winner, isDraw, gameEnded, incrementGamesPlayed, updateWinRate, updateHighScore]);
+  useEffect(() => {
+    if (
+      gameMode === '1P' &&        // only in 1 player mode
+      !isXTurn && // AI's turn
+      !winner && // no winner yet
+      !isDraw    // not a draw
+    ) {
+      const timer = setTimeout(() => {
+        makeComputerMove();
+      }, 500); // delay for better UX
+
+      return () => clearTimeout(timer); // cleanup if component unmounts or dependencies change
+    }
+  }, [isXTurn, gameMode, winner, isDraw, board]);
 
   return (
     <IonPage>
@@ -103,9 +145,30 @@ const TicTacToePage: React.FC = () => {
       {/* Main Content */}
       <IonContent className="tic-container">
 
+        {/* Game Mode Selection (only show if no mode selected) */}
+        {!gameMode ? (
+          <div className="mode-select">
+            <h2 className="mode-title">Select Game Mode</h2>
+            <p className="mode-subtitle">Play against the computer or a friend</p>
+
+          <div className="mode-buttons">
+
+            <IonButton 
+            onClick={() => setGameMode('1P')} className="mode-btn gradient-btn">
+              One Player
+            </IonButton>
+
+            <IonButton onClick={() => setGameMode('2P')} className="mode-btn gradient-btn">
+              Two Players
+            </IonButton>
+          </div>
+          </div>
+        ) : (
+          <>
+          
         {/* Display game status */}
           <h2 className="game-status">
-            {!gameEnded && `Turn: ${isXTurn ? 'X' : 'O'}`}
+            {!gameEnded ? `Turn: ${isXTurn ? 'X' : 'O'}` : "\u00A0"}
           </h2>
 
         {/* Game Board */}
@@ -113,7 +176,10 @@ const TicTacToePage: React.FC = () => {
           {board.map((cell, index) => (
             <div
               key={index}
-              className="cell"
+              className={`cell 
+                 ${cell ? 'filled' : ''} 
+                ${winningLine?.includes(index) ? 'winner-cell' : ''}
+        `}
               onClick={() => handleClick(index)}
             >
               {cell}
@@ -130,9 +196,9 @@ const TicTacToePage: React.FC = () => {
         <IonModal isOpen={showResult} backdropDismiss={false}>
           <div className="result-card">
             <h2>
-              {winner 
-                ? `Winner: ${winner}` 
-                : "It's a draw!"}
+              {gameEnded && (
+                winner ? `Winner: ${winner}` : "It's a draw!"
+              )}
             </h2>
 
             <IonButton 
@@ -145,6 +211,8 @@ const TicTacToePage: React.FC = () => {
             </IonButton>
           </div>
         </IonModal>
+      </>
+        )}  
 
       </IonContent>
 
@@ -179,7 +247,11 @@ function calculateWinner(board: any[]) {
       board[a] === board[b] &&
       board[a] === board[c]
     ) {
-      return board[a];
+      return {
+        winner: board[a],
+        line: line
+      };
+      
     }
   }
 
