@@ -24,6 +24,9 @@ const TicTacToePage: React.FC = () => {
   // State for game mode
   const [gameMode, setGameMode] = useState<'1P' | '2P' | null>(null);
 
+  // for score tracking
+  const [scores, setScores] = useState({ X: 0, O: 0, draw: 0 });
+
   /**
    * handleClick
    * Handles user clicking a cell on the board
@@ -91,6 +94,18 @@ const TicTacToePage: React.FC = () => {
     setShowResult(false); // close modal if open
   };
 
+  /** 
+   * change game mode
+   * 
+   */
+  const handleChangeMode = () => {
+    resetGame(); //reset board + state
+
+    setScores({ X: 0, O: 0, draw: 0 }); //reset score when changing gamemode
+
+    setGameMode(null); // go back to mode selection
+  };
+
   /**
    * GAME END Handling
    * 
@@ -109,7 +124,19 @@ const TicTacToePage: React.FC = () => {
         updateWinRate(winner === 'X');
       }
 
-      updateHighScore(1);
+      // score tracking
+      if (winner === 'X') {
+        setScores(prev => {
+          const newScore = prev.X + 1;
+          updateHighScore(newScore);
+          return { ...prev, X: newScore };
+        });
+      } else if (winner === 'O') {
+        setScores(prev => ({ ...prev, O: prev.O + 1 }));
+      } else if (isDraw) {
+        setScores(prev => ({ ...prev, draw: prev.draw + 1 }));
+      }
+
       setGameEnded(true);
       setShowResult(true); // show result card
     }
@@ -187,9 +214,21 @@ const TicTacToePage: React.FC = () => {
           ))}
         </div>
 
+        {/* Score Display */}
+        <div className="scoreboard">
+          <span>X: {scores.X}</span>
+          <span>O: {scores.O}</span>
+          <span>Draws: {scores.draw}</span>
+        </div>
+
         {/* Restart Button */}
         <IonButton className="restart-btn gradient-btn" onClick={resetGame}>
           Restart
+        </IonButton>
+
+        {/* Change Mode Button */}
+        <IonButton className="mode-change-btn" fill="outline" onClick={handleChangeMode}>
+          Change Mode
         </IonButton>
 
         {/* Result Modal */}
