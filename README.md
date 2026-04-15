@@ -50,7 +50,7 @@ A mobile gaming application built with Ionic React, TypeScript, and Bootstrap CS
 
 1. **Install dependencies:**
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 2. **Run in browser:**
