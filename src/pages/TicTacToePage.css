@@ -1,29 +1,117 @@
 /* Container for entire page */
 .tic-container {
-  text-align: center;
   padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  min-height: 100%;
 }
 
 /* 3x3 grid layout for board */
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 80px);
+  grid-template-columns: repeat(3, 1fr);
+
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 1;    /* keeps it square */
+
   gap: 10px;
-  justify-content: center;
-  margin: 20px 0;
+  margin: 20px auto;
 }
 
 /* Individual cell styling */
 .cell {
-  width: 80px;
-  height: 80px;
-  background: #111;
-  color: #00D9FF;
+  width: 100%;
+  aspect-ratio: 1;
+
+  background: #0A1628;
+  border: 2px solid rgba(0, 217, 255, 0.4);
+
   font-size: 2rem;
+  font-weight: bold;
+  color: #00D9FF;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+.cell:hover {
+  background: rgba(0, 217, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+}
+
+.game-status {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #00D9FF;
+  text-align: center;
+  width: 100%;
+  min-height: 24px; /* to prevent layout shift when status changes */
+}
+
+.restart-btn {
+  width: auto;
+  max-width: 200px;
+
+  margin: 10px auto 0 auto;
+
+  display: block;
+
+  --padding-start: 20px;
+  --padding-end: 20px;
+}
+
+.restart-btn ion-button {
+  width: 100%;
+  max-width: auto;
+}
+
+.result-card {
+  background: #0A1628;
+  color: #FFFFFF;
+
+  width: 85%;
+  max-width: 360px;
+
+  padding: 24px;
+  border-radius: 20px;
+
+  text-align: center;
+
+  margin: auto;   /* ← THIS centers it correctly */
+
+  box-shadow: 
+    0 0 20px rgba(0, 217, 255, 0.4),
+    0 0 40px rgba(0, 217, 255, 0.2);
+}
+
+.result-card h2 {
+  font-size: 28px;
+  font-weight: bold;
+
+  color: #00D9FF;
+
+  margin-bottom: 20px;
+
+  text-shadow: 0 0 12px rgba(0, 217, 255, 0.7);
+}
+
+.result-card ion-button {
+  width: 80%;
+  max-width: 250px;
+
+  margin-top: 10px;
+}
+
+ion-modal{
+  --background: transparent;
+}
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonModal, IonContent, IonButton, IonButtons, IonBackButton } from '@ionic/react';
 import { useGame } from '../context/GameContext';
 import './TicTacToePage.css';
 
@@ -9,14 +9,17 @@ const TicTacToePage: React.FC = () => {
   // Board state (9 cells)
   const [board, setBoard] = useState(Array(9).fill(null));
 
-  // For tracking whose turn it is (true = X, false = O)
+  // Tracks whose turn it is (true = X, false = O)
   const [isXTurn, setIsXTurn] = useState(true);
 
-  // For access toGameContext functions for updating stats
+  // GameContext integration, stast
   const { incrementGamesPlayed, updateWinRate, updateHighScore } = useGame();
 
   // Tracks if stats have been updated for current game to prevent multiple updates on re-render
   const [gameEnded, setGameEnded] = useState(false);
+
+  // Card pop up when game ends
+  const [showResult, setShowResult] = useState(false);
 
   /**
    * handleClick
@@ -42,7 +45,7 @@ const TicTacToePage: React.FC = () => {
     setIsXTurn(!isXTurn);
   };
 
-  // Determine winner if somoene wins
+  // Determine winner if someone wins
   const winner = calculateWinner(board);
 
   // Checks for draw (no winner and board is full)
@@ -55,36 +58,45 @@ const TicTacToePage: React.FC = () => {
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setIsXTurn(true);
-    setGameEnded(false); //allow stats to update again when game ends
+    setGameEnded(false); // allow stats to update again when game ends
+    setShowResult(false); // close modal if open
   };
 
   /**
    * GAME END Handling
    * 
-   * Runs when someone wins.
+   * Runs when someone wins OR game is a draw.
    * Updates:
    * - games played
    * - win rate (assumes player is X)
    * - high score
    */
-
   useEffect(() => {
-    if (winner && !gameEnded) {
+    if ((winner || isDraw) && !gameEnded) {
       incrementGamesPlayed();
-      updateWinRate(winner === 'X');
-      updateHighScore(1);
-      setGameEnded(true);
-    }
 
-  }, [winner, gameEnded]);
+      // Only update win rate if there is a winner
+      if (winner) {
+        updateWinRate(winner === 'X');
+      }
+
+      updateHighScore(1);
+
+      setGameEnded(true);
+      setShowResult(true); // show result card
+    }
+  }, [winner, isDraw, gameEnded, incrementGamesPlayed, updateWinRate, updateHighScore]);
 
   return (
     <IonPage>
 
-      {/* Page Header */}
+      {/* Quit/Back button */}
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tic Tac Toe</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref='/tabs/games' />
+          </IonButtons>
+
         </IonToolbar>
       </IonHeader>
 
@@ -92,14 +104,9 @@ const TicTacToePage: React.FC = () => {
       <IonContent className="tic-container">
 
         {/* Display game status */}
-        <h2>
-          {winner 
-            ? `Winner: ${winner}` 
-            : isDraw
-              ? "It's a draw!"
-              : `Turn: ${isXTurn ? 'X' : 'O'}`
-          }
-        </h2>
+          <h2 className="game-status">
+            {!gameEnded && `Turn: ${isXTurn ? 'X' : 'O'}`}
+          </h2>
 
         {/* Game Board */}
         <div className="board">
@@ -115,18 +122,40 @@ const TicTacToePage: React.FC = () => {
         </div>
 
         {/* Restart Button */}
-        <IonButton onClick={resetGame}>
+        <IonButton className="restart-btn gradient-btn" onClick={resetGame}>
           Restart
         </IonButton>
 
+        {/* Result Modal */}
+        <IonModal isOpen={showResult} backdropDismiss={false}>
+          <div className="result-card">
+            <h2>
+              {winner 
+                ? `Winner: ${winner}` 
+                : "It's a draw!"}
+            </h2>
+
+            <IonButton 
+              className="restart-btn gradient-btn"
+              onClick={() => {
+                resetGame();
+              }}
+            >
+              Play Again
+            </IonButton>
+          </div>
+        </IonModal>
+
       </IonContent>
+
     </IonPage>
   );
 };
 
+
 /**
  * WINNER CALCULATION
- *  calculateWinner
+ * calculateWinner
  * Checks all winning combinations on the board
  * 
  * @param board - current game board array

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonPage, IonHeader, IonToolbar, IonTitle, IonText, IonCardContent, IonCard, IonImg, useIonRouter } from '@ionic/react';
+import { IonContent, IonPage, IonHeader, IonToolbar, IonTitle, IonText, IonCardContent, IonCard, IonImg, useIonRouter, IonButton, IonButtons } from '@ionic/react';
 import './GamesPage.css';
 
 const GamesPage: React.FC = () => {
@@ -19,7 +19,7 @@ const GamesPage: React.FC = () => {
 
       <IonContent className="games-page cyber-bg">
         <div className="games-content">
-          <div className="placeholder-message">
+  
             <IonCard 
             className="game-card stats-card" 
             onClick={() => router.push('/trivia')}
@@ -34,12 +34,19 @@ const GamesPage: React.FC = () => {
             </div>
             <div className="text-column">
               <IonText className="game-name">
-                <h2>Quiz Master</h2>
+                <h2 className="game-title">Quiz Master</h2>
               </IonText>
               <IonText className="game-stats">
                 <p>Test your Knowledge</p>
               </IonText>
             </div>
+
+            {/* BUTTON */}
+            <IonButton size="small" className="play-btn">
+              PLAY
+            </IonButton>
+
+
           </IonCardContent>
           </IonCard>
 
@@ -47,7 +54,8 @@ const GamesPage: React.FC = () => {
           {/* Tic Tac Toe Game */}
           <IonCard
             className="game-card stats-card"
-            onClick={() => router.push('/tabs/tictactoe')}>
+            onClick={() => router.push('/tabs/tictactoe')}
+            >
             <IonCardContent className="card-layout">
 
               {/* Image Section */}
@@ -62,18 +70,22 @@ const GamesPage: React.FC = () => {
               {/* Text Section */}
               <div className="text-column">
                 <IonText className="game-name">
-                  <h2>Tic Tac Toe</h2>
+                  <h2 className="game-title">Tic Tac Toe</h2>
                 </IonText>
                 <IonText className="game-stats">
                   <p>Beat the AI</p>
                 </IonText>
               </div>
 
+              {/* BUTTON */}
+              <IonButton size="small" className="play-btn">
+                PLAY
+              </IonButton>
+
               
             </IonCardContent>
           </IonCard>
 
-          </div>
         </div>
       </IonContent>
     </IonPage>
