@@ -24,7 +24,11 @@ export const QuickPlayCard: React.FC<QuickPlayCardProps> = ({
       <div className="quick-play-content">
         <div className="quick-play-icon-container">
           <div className="quick-play-icon-bg">
-            <span className="quick-play-icon">{icon}</span>
+            <img
+              src={icon}
+              className="quick-play-image"
+              alt={title}
+            />
           </div>
         </div>
         

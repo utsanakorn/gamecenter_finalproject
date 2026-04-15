@@ -31,10 +31,12 @@ import GamesPage from './pages/GamesPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage'; 
 
-/* Context Providers */
+/* Context Providers */ 
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { GameProvider } from './context/GameContext';
 import { AchievementProvider } from './context/AchievementContext';
+import TriviaPage from './pages/TriviaPage';
+import TicTacToePage from './pages/TicTacToePage';
 
 setupIonicReact();
 
@@ -76,12 +78,17 @@ const AppContent: React.FC = () => {
     );
   }
 
+
   return (
     <IonReactRouter>
       <IonRouterOutlet>
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={RegisterPage} />
         
+        <PrivateRoute exact path="/trivia" component={TriviaPage} />
+        <PrivateRoute exact path="/tictactoe" component={TicTacToePage} />
+
+
         <PrivateRoute path="/tabs" component={TabsPage} />
 
        
@@ -105,7 +112,10 @@ const TabsPage: React.FC = () => {
         <PrivateRoute exact path="/tabs/games" component={GamesPage} />
         <PrivateRoute exact path="/tabs/profile" component={ProfilePage} />
         <Route exact path="/tabs/edit-profile" component={EditProfilePage} />
-        
+
+        {/* tictactoe route */}
+        <PrivateRoute exact path="/tabs/tictactoe" component={TicTacToePage} />
+
         <Route exact path="/tabs">
           <Redirect to="/tabs/home" />
         </Route>

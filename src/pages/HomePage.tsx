@@ -59,19 +59,19 @@ const HomePage: React.FC = () => {
             <QuickPlayCard
               title="Quiz Master"
               description="Test your knowledge"
-              icon="🎯"
+              icon="assets/image/trivia.png"
               route="/tabs/games"
               buttonText="PLAY"
-              onClick={() => history.push('/tabs/games')}
+              onClick={() => history.push('/trivia')}
             />
 
             <QuickPlayCard
               title="Tic Tac Toe"
               description="Beat the AI"
-              icon="⭕"
+              icon="assets/image/tictactoe.png"
               route="/tabs/games"
               buttonText="PLAY"
-              onClick={() => history.push('/tabs/games')}
+              onClick={() => history.push('/tabs/tictactoe')}
             />
           </div>
         </div>

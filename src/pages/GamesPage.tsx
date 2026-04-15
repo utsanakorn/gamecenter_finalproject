@@ -1,8 +1,9 @@
 import React from 'react';
-import { IonContent, IonPage, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
+import { IonContent, IonPage, IonHeader, IonToolbar, IonTitle, IonText, IonCardContent, IonCard, IonImg, useIonRouter } from '@ionic/react';
 import './GamesPage.css';
 
 const GamesPage: React.FC = () => {
+  const router = useIonRouter();
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
@@ -19,11 +20,59 @@ const GamesPage: React.FC = () => {
       <IonContent className="games-page cyber-bg">
         <div className="games-content">
           <div className="placeholder-message">
-            <h2>🎮 Games Page</h2>
-            <p>This page will be implemented by Person 2</p>
-            <p className="placeholder-note">
-              Will include: Quiz Master, Tic Tac Toe, Memory Match, Puzzle Rush
-            </p>
+            <IonCard 
+            className="game-card stats-card" 
+            onClick={() => router.push('/trivia')}
+          >
+            <IonCardContent className="card-layout">
+            <div className="quick-play-icon-bg">
+              <img 
+                src="assets/image/trivia.png" 
+                className="quick-play-image" 
+                alt="Quiz Master"
+              />
+            </div>
+            <div className="text-column">
+              <IonText className="game-name">
+                <h2>Quiz Master</h2>
+              </IonText>
+              <IonText className="game-stats">
+                <p>Test your Knowledge</p>
+              </IonText>
+            </div>
+          </IonCardContent>
+          </IonCard>
+
+          
+          {/* Tic Tac Toe Game */}
+          <IonCard
+            className="game-card stats-card"
+            onClick={() => router.push('/tabs/tictactoe')}>
+            <IonCardContent className="card-layout">
+
+              {/* Image Section */}
+              <div className="quick-play-icon-bg">
+                <img
+                  src="assets/image/tictactoe.png"
+                  className="quick-play-image"
+                  alt="Tic Tac Toe"
+                />
+              </div>
+
+              {/* Text Section */}
+              <div className="text-column">
+                <IonText className="game-name">
+                  <h2>Tic Tac Toe</h2>
+                </IonText>
+                <IonText className="game-stats">
+                  <p>Beat the AI</p>
+                </IonText>
+              </div>
+
+              
+            </IonCardContent>
+          </IonCard>
+
           </div>
         </div>
       </IonContent>

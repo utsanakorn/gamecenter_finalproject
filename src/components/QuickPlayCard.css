@@ -7,6 +7,13 @@
   transition: all 0.3s ease;
 }
 
+/* image replacement for quicplay icon */
+.quick-play-image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
 .quick-play-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 217, 255, 0.2);
@@ -26,8 +33,10 @@
 .quick-play-icon-bg {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, #FF6B9D, #C06C84);
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid rgba(0, 217, 255, 0.3);
   border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;

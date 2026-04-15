@@ -1,0 +1,29 @@
+/* Container for entire page */
+.tic-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* 3x3 grid layout for board */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Individual cell styling */
+.cell {
+  width: 80px;
+  height: 80px;
+  background: #111;
+  color: #00D9FF;
+  font-size: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
